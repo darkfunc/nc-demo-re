@@ -1,0 +1,130 @@
+import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
+
+import "../styles.css";
+
+import { toJsonLd } from "@/lib/jsonld";
+
+const SITE_URL = "https://www.nalandacolleges.lk";
+const SITE_NAME = "Nalanda College Colombo";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Character Illumines Wisdom`,
+    template: `%s — ${SITE_NAME}`,
+  },
+  description:
+    "Official website of Nalanda College Colombo. Vision, mission, admissions notices, co-curricular life and contact details.",
+  applicationName: SITE_NAME,
+  keywords: [
+    "Nalanda College Colombo",
+    "Nalanda College",
+    "Colombo school",
+    "Buddhist education Sri Lanka",
+    "NC",
+    "Mother Nalanda",
+    "Nalanda",
+    "NJOBA",
+    "NCCU",
+    "Nalanda College Colombo Admissions",
+    "Nalanda College Colombo News",
+    "Nalanda College Colombo Announcements",
+    "100Nalanda",
+    "Nalanda College Colombo Co-curricular",
+  ],
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  referrer: "strict-origin-when-cross-origin",
+  formatDetection: {
+    telephone: false,
+    address: false,
+    email: false,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_LK",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Character Illumines Wisdom`,
+    description:
+      "Official website of Nalanda College Colombo. Vision, mission, admissions notices, co-curricular life and contact details.",
+    images: [
+      {
+        url: "/nc-crest.png",
+        alt: SITE_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} — Character Illumines Wisdom`,
+    description:
+      "Official website of Nalanda College Colombo. Vision, mission, admissions notices, co-curricular life and contact details.",
+    images: ["/nc-crest.png"],
+  },
+  icons: {
+    icon: [{ url: "/nc-crest.png", type: "image/png" }],
+    shortcut: "/nc-crest.png",
+    apple: "/nc-crest.png",
+  },
+  manifest: "/site.webmanifest",
+  category: "education",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4efe4" },
+    { media: "(prefers-color-scheme: dark)", color: "#6c211a" },
+  ],
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/nc-crest.png`,
+  foundingDate: "1925",
+  sameAs: [
+    // TODO: add real social profile URLs, e.g.
+    // "https://www.facebook.com/NalandaCollegeColombo",
+  ],
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        />
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: toJsonLd(organizationJsonLd) }}
+        />
+      </head>
+      <body className="bg-background text-foreground font-body antialiased">
+        {children}
+      </body>
+    </html>
+  );
+}

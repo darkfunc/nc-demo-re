@@ -1,0 +1,14 @@
+# Bun configuration — see https://bun.com/docs/runtime/bunfig
+
+[install.security]
+# Scan every package (incl. transitive deps) against Socket's real-time threat
+# intelligence before it is installed. Fails `bun install`/`bun add` on fatal
+# advisories; prompts locally and fails in CI on warnings.
+# Optional: export SOCKET_API_KEY to apply org policies.
+scanner = "@socketsecurity/bun-security-scanner"
+
+# Optional supply-chain hygiene: reject package versions published less than
+# the given number of seconds ago (e.g. 86400 = 1 day). Disabled by default
+# because it can block resolving freshly released versions of dependencies.
+# [install]
+# minimumReleaseAge = 86400
